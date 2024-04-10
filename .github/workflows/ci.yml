@@ -8,14 +8,15 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Build Terraform'
+    runs-on: ubuntu-latest
+    environment: production
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-    runs-on: ubuntu-latest
-    environment: production
+      TF_WORKING_DIRECTORY: ./src
 
     defaults:
       run:
@@ -23,23 +24,23 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      working-directory: aks
       run: terraform init
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
            
     - name: Terraform Format
-      working-directory: aks
       run: terraform fmt
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
 
     - name: Terraform Plan
-      working-directory: aks
       run: terraform plan
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
     
     - name: Terraform Apply
-      working-directory: aks
       run: terraform apply -auto-approve
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
