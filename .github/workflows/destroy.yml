@@ -14,6 +14,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TF_WORKING_DIRECTORY: ./src
     runs-on: ubuntu-latest
     environment: production
 
@@ -29,9 +30,9 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      working-directory: aks
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
       run: terraform init
     
     - name: Terraform Destroy
-      working-directory: aks
+      working-directory: ${{ env.TF_WORKING_DIRECTORY }}
       run: terraform destroy -auto-approve
