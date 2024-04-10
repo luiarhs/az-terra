@@ -3,20 +3,22 @@ terraform {
     resource_group_name  = "ballastlane-rg"
     storage_account_name = "ballastlaneprod"
     container_name       = "tfstate"
-    key                  = "prod.terraform.tfstate"
+    key                  = "terraform.tfstate"
+    use_oidc             = true
   }
 }
 
 terraform {
   required_providers {
     azurerm = {
-      source  = "hashicorp/azurerm"
+      source = "hashicorp/azurerm"
     }
   }
 }
 
 provider "azurerm" {
   features {}
+  use_oidc = true
 }
 
 resource "azurerm_kubernetes_cluster" "k8squickstart" {
@@ -27,17 +29,17 @@ resource "azurerm_kubernetes_cluster" "k8squickstart" {
 
   kubernetes_version = var.k8s_version
 
-  
+
   network_profile {
-  network_plugin = "azure"
-  network_policy = "azure"
-}
+    network_plugin = "azure"
+    network_policy = "azure"
+  }
 
   default_node_pool {
     name       = "default"
     node_count = var.node_count
     vm_size    = "Standard_A2_v2"
-    
+
   }
 
   identity {
