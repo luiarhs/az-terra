@@ -3,10 +3,10 @@
 ### Install Dependencies
 Terraform and Helm that we will be using to deploy.
 
-Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli
-Helm: https://helm.sh/docs/intro/install/
-Azure Cli: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
-Docker Desktop: https://www.docker.com/products/docker-desktop
+- Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli
+- Helm: https://helm.sh/docs/intro/install/
+- Azure Cli: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+- Docker Desktop: https://www.docker.com/products/docker-desktop
 
 ### Create the resources in Azure use the following commands:
 
@@ -32,3 +32,19 @@ terraform plan
 # Terraform Apply
 terraform apply
 ```
+
+### Project Structure
+
+terraform/
+│
+├── modules/
+│   ├── aks/
+│   └── sql_database/
+├── environments/
+│   ├── dev/
+│   └── prod/
+└── main.tf
+│
+├── README.md
+│
+└── .gitignore

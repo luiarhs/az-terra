@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Destroy Terraform'
+    name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
     env:
