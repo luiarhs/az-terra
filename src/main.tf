@@ -1,52 +1,21 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "ballastlane-rg"
-    storage_account_name = "ballastlaneprod"
-    container_name       = "tfstate"
-    key                  = "terraform.tfstate"
-    use_oidc             = true
-  }
-}
 
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-  use_oidc = true
-}
-
-resource "azurerm_kubernetes_cluster" "k8squickstart" {
-  name                = var.name
-  location            = var.location
+module "aks_cluster" {
+  source  = "./modules/aks"
+  // Configuration for AKS module
   resource_group_name = var.resource_group_name
-  dns_prefix          = "${var.name}-dns01"
+  cluster_name        = "aksenvironment01"
+  location            = "southcentralus"
+  node_count          = 3
+  node_vm_size        = "Standard_DS2_v2"
+}
 
-  kubernetes_version = var.k8s_version
-
-
-  network_profile {
-    network_plugin = "azure"
-    network_policy = "azure"
-  }
-
-  default_node_pool {
-    name       = "default"
-    node_count = var.node_count
-    vm_size    = "Standard_A2_v2"
-
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  tags = {
-    Environment = "Production"
-  }
+module "database" {
+  source  = "./modules/database"
+  // Configuration for Azure SQL Database module
+  resource_group_name   = var.resource_group_name
+  location              = "southcentralus"
+  database_name         = "db01"
+  server_name           = "ballast-sqlserver"
+  administrator_login   = "ballastlane01"
+  administrator_password = ""
 }

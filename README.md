@@ -39,7 +39,7 @@ terraform/
 │
 ├── modules/
 │   ├── aks/
-│   └── sql_database/
+│   └── database/
 ├── environments/
 │   ├── dev/
 │   └── prod/
