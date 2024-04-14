@@ -1,24 +1,22 @@
-# terraform/environments/dev/main.tf
 
 module "aks_cluster" {
-  source = "../../modules/aks"
-
-  resource_group_name = "your-resource-group"
-  cluster_name        = "your-cluster-name"
-  location            = "your-location"
+  source  = "../../modules/aks"
+  // Configuration for AKS module
+  resource_group_name = "ballastlane-rg"
+  cluster_name        = "akscluster-dev"
+  location            = "southcentralus"
   node_count          = 3
   node_vm_size        = "Standard_DS2_v2"
 }
 
-# terraform/environments/dev/main.tf
-
 module "database" {
-  source = "../../modules/database"
-
-  resource_group_name   = "your-resource-group"
-  location              = "your-location"
-  database_name         = "your-database-name"
-  server_name           = "your-server-name"
-  administrator_login   = "your-admin-login"
-  administrator_password = "your-admin-password"
+  source  = "../../modules/database"
+  // Configuration for Azure SQL Database module
+  resource_group_name   = "ballastlane-rg"
+  location              = "southcentralus"
+  storage_name          = "mysqlstorage-dev"
+  database_name         = "mysqldb-dev"
+  server_name           = "mysqlserver-dev"
+  administrator_login   = "mysqladminun"
+  administrator_password = "4-v3ry-53cr37-p455w0rd"
 }

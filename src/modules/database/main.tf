@@ -12,6 +12,10 @@ variable "database_name" {
   description = "Name of the SQL Database."
 }
 
+variable "storage_name" {
+  description = "Name of the Storage Account."
+}
+
 variable "server_name" {
   description = "Name of the SQL Server."
 }
@@ -28,34 +32,27 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_mssql_server" "sql_server" {
-  name                         = var.server_name
-  resource_group_name          = var.resource_group_name
-  location                     = var.location
-  version                      = "12.0" # Choose the desired version
+resource "azurerm_mysql_flexible_server" "mysql_server" {
+  name                = var.server_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
-  administrator_login          = var.administrator_login
-  administrator_login_password = var.administrator_password
+  administrator_login    = "mysqladminun"
+  administrator_password = "H@Sh1CoR3!"
+  sku_name               = "B_Standard_B1s"
 
   tags = {
-    Environment = "Production"
+    Environment = "dev"
   }
 }
 
-resource "azurerm_mssql_database" "database" {
+resource "azurerm_mysql_flexible_database" "mysql_database" {
   name                = var.database_name
-#   resource_group_name = var.resource_group_name
-#   location            = var.location
-  server_id             = azurerm_mssql_server.sql_server.id
-#   server_name         = azurerm_sql_server.sql_server.name
-#   edition             = "Basic" # Choose the desired edition
-  collation             = "SQL_Latin1_General_CP1_CI_AS"
-  license_type          = "LicenseIncluded"
-  max_size_gb           = 4
-
-  tags = {
-    Environment = "Production"
-  }
+  resource_group_name = var.resource_group_name
+  server_name         = var.server_name
+  charset             = "utf8"
+  collation           = "utf8_unicode_ci"
+  
 
   # prevent the possibility of accidental data loss
   lifecycle {
