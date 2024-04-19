@@ -35,8 +35,8 @@ module "dev" {
 }
 
 # Include configurations for prod environment
-# module "prod_environment" {
-#   source = "./environments/prod"
-# }
+module "prod_environment" {
+  source = "./environments/prod"
+}
 
 # Other global configurations and resources can go here
