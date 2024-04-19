@@ -1,6 +1,21 @@
 variable "name" {
   type    = string
-  default = "aksenvironment01"
+  default = "aks-cluster-dev"
+}
+variable "container_registry_name" {
+  type    = string
+  default = "ballast-acr"
+  
+}
+variable "registry-sku" {
+  type    = string
+  default = "Basic"
+}
+
+variable "storage_account_name" {
+  type    = string
+  default = "ballastsadev"
+  
 }
 
 variable "resource_group_name" {}
