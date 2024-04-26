@@ -1,4 +1,4 @@
-# Ballastlane Infra
+# Az Terra
 
 ### Install Dependencies
 Terraform and Helm that we will be using to deploy.
