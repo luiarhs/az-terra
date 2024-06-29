@@ -1,4 +1,4 @@
-# Az Terra
+# Azure IaC with Terraform
 
 ### Install Dependencies
 Terraform and Helm that we will be using to deploy.
