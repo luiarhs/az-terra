@@ -35,6 +35,7 @@ terraform apply
 
 ### Project Structure
 
+```
 terraform/
 │
 ├── modules/
@@ -48,3 +49,4 @@ terraform/
 ├── README.md
 │
 └── .gitignore
+```
